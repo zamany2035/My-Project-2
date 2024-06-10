@@ -1,0 +1,65 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
+
+    public class SearchAlgorithmsComparison {
+        // ... (previous code remains unchanged)
+
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.print("Enter the filename containing student data: ");
+            String filename = scanner.nextLine();
+
+            try {
+                performSearches(filename, scanner);
+            } catch (IOException e) {
+                System.err.println("Error reading file: " + e.getMessage());
+            }
+
+            scanner.close();
+        }
+
+        private static void performSearches(String filename, Scanner scanner) throws IOException {
+            // Read data from the file and store in appropriate data structures
+            // ...
+
+            // Input the score we're searching for
+            System.out.print("Enter the score you want to search for: ");
+            int searchScore = scanner.nextInt();
+
+            // Perform searches
+            performSearchByName("John Doe");
+            performSearchByCAScore(searchScore);
+            performSearchByExamScore(searchScore);
+
+            // Write the results to a file
+            writeResultsToFile("search_results.txt", "Search results for score " + searchScore + ":\n" +
+                    "Search by Name: " + foundStudentByName + "\n" +
+                    "Search by CA score: " + foundStudentByCAScore + "\n" +
+                    "Search by Exam score: " + foundStudentByExamScore);
+        }
+
+        private static void performSearchByName(String name) {
+            // Perform search by name
+            // ...
+        }
+
+        private static void performSearchByCAScore(int score) {
+            // Perform search by CA score
+            // ...
+        }
+
+        private static void performSearchByExamScore(int score) {
+            // Perform search by Exam score
+            // ...
+        }
+
+        private static void writeResultsToFile(String filename, String content) throws IOException {
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+                writer.write(content);
+            }
+        }
+    }
+

@@ -1,0 +1,52 @@
+public class SearchAlgorithmsComparison {
+    // ... (previous code remains unchanged)
+
+    private static void performSearches(String filename) throws IOException {
+        // Read data from the file and store in appropriate data structures
+        FileReader fileReader = new FileReader(filename);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        String line;
+        LinkedList<Student> unsortedList = new LinkedList<>();
+        BinarySearchTree<String, Student> nameBST = new BinarySearchTree<>();
+
+        while ((line = bufferedReader.readLine()) != null) {
+            String[] data = line.split(",");
+            int id = Integer.parseInt(data[0]);
+            String name = data[1];
+            int mathCA = Integer.parseInt(data[2]);
+            int mathExam = Integer.parseInt(data[3]);
+            int physicsCA = Integer.parseInt(data[4]);
+            int physicsExam = Integer.parseInt(data[5]);
+            int logicCA = Integer.parseInt(data[6]);
+            int logicExam = Integer.parseInt(data[7]);
+
+            Student student = new Student(id, name, mathCA, mathExam, physicsCA, physicsExam, logicCA, logicExam);
+            unsortedList.add(student);
+            nameBST.insert(name, student);
+        }
+
+        // Perform sequential search on unsorted linked list by name
+        long startTimeUnsortedNameSearch = System.nanoTime();
+        Student foundStudentUnsorted = searchByNameUnsorted(unsortedList, "Student500");
+        long endTimeUnsortedNameSearch = System.nanoTime();
+        long durationUnsortedNameSearch = (endTimeUnsortedNameSearch - startTimeUnsortedNameSearch);
+
+        // Perform binary search using a binary search tree by name
+        long startTimeBSTNameSearch = System.nanoTime();
+        Student foundStudentBST = nameBST.search("Student500");
+        long endTimeBSTNameSearch = System.nanoTime();
+        long durationBSTNameSearch = (endTimeBSTNameSearch - startTimeBSTNameSearch);
+
+        System.out.println("Sequential search on unsorted linked list by name took " + durationUnsortedNameSearch + " nanoseconds");
+        System.out.println("Binary search using a binary search tree by name took " + durationBSTNameSearch + " nanoseconds");
+    }
+
+    private static Student searchByNameUnsorted(LinkedList<Student> list, String name) {
+        for (Student student : list) {
+            if (student.getName().equals(name)) {
+                return student;
+            }
+        }
+        return null;
+    }
+}
